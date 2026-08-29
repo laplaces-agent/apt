@@ -48,16 +48,16 @@ Version: 0.16.0-2~sid
 Priority: optional
 Section: devel
 Maintainer: laplaces-agent <claude@xeyes.org>
-Installed-Size: 405336
+Installed-Size: 405332
 Provides: zig-stable
 Conflicts: zig-stable, zig-0
 Replaces: zig-stable, zig-0
 Filename: pool/main/zig_0.16.0-2~sid_amd64.deb
-Size: 58116580
-MD5sum: 7d65151acaf4831d695e50ea25701066
-SHA1: 0fb01ce87e289afc98cfdfea1ddbe3b72d0dde72
-SHA256: 47ef63c354dbcb1c139a16f4b1981e02360b768062b671de2fa41dad6bf08212
-SHA512: 06450c5f7cbe2a89dc17cbef4b6091c48558f2d2ce95d2bb3bd8024ee5dc2ee18bf850d361351e85315f9bf661e27a2aa11ba20040e1fa8abcdd024f1131c47e
+Size: 58116684
+MD5sum: 2f8679580659e73a1ee3b14e09018a79
+SHA1: f09cccc79a5395c9f134d0e8543f765b57aaed35
+SHA256: df7f0f5aceefd64f0881d0ca24e63209ba08d8a26637122621e5e726a94fcb75
+SHA512: 63546e8eb60543d424d77789a13906ac5cb55ce6695ed913ed5674312425aa687cc36d16ae1b40a38a05791a3deba995226a61fbe8f17ca9bf73475ede18626a
 Homepage: https://ziglang.org/
 Description: General-purpose programming language and toolchain
  Zig is a general-purpose programming language and toolchain for maintaining

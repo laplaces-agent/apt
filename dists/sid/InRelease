@@ -4,30 +4,30 @@ Hash: SHA512
 Architectures: amd64
 Codename: sid
 Components: main
-Date: Sat, 29 Aug 2026 01:29:20 +0000
+Date: Sat, 29 Aug 2026 01:43:05 +0000
 Label: xeyes.org apt repository
 Origin: xeyes.org
 Suite: sid
 MD5Sum:
- 82194d28e31a0c11fd64e3ca130613a2              151 Release
- 0834de902d4495eaa73d97b89a4d1f6f             2944 main/binary-amd64/Packages
- 273d3b30512c122f4178e0f0e4d81535             1486 main/binary-amd64/Packages.gz
+ 6a5037f12b1a7edb5f3c10a1eee210f0              151 Release
+ e626ff71781c52e5e6ec1d5bee10a36f             2944 main/binary-amd64/Packages
+ a698ff202e759829ed94e49e35c795c2             1483 main/binary-amd64/Packages.gz
 SHA1:
- 3523232cea1cf7f77f167116f0b02ca99b1528c8              151 Release
- e99a5fc17e79128393571450a8a9596c1c93c73f             2944 main/binary-amd64/Packages
- 158d965e1a1b36c59d46e5070fc339dabfc1df99             1486 main/binary-amd64/Packages.gz
+ cbe978dc6040ca46ba1e5948ac9e7eab67b62baf              151 Release
+ 7c7522c75b042489352b033f441c773e5bd48bbf             2944 main/binary-amd64/Packages
+ 5d27031ccb8764481d941c041c0511f0458f8b31             1483 main/binary-amd64/Packages.gz
 SHA256:
- c0924f64115b1fd161b863e47779f45e7776c83cb8373672f0908176f0177ae0              151 Release
- defe0366af94aede6fcb7406c499148bf55721d7eb605b8dedb0f8075e928831             2944 main/binary-amd64/Packages
- d1362a7b5d883885e99476d382bdbe73223a18f044534423af1b354d6283f37c             1486 main/binary-amd64/Packages.gz
+ b12b2f63879920470abbaa2ac2ce9f8d6794d0a8c007aa98fddab62a1d2a974d              151 Release
+ 37ef152e99fa110b4d05fdc75f250d420fe6a6c2c662a65670ac0455bd14d7f4             2944 main/binary-amd64/Packages
+ 8a476a97738e064d15e9594bad6777f162b72e045e408c27915fc59db269c280             1483 main/binary-amd64/Packages.gz
 SHA512:
- 02ee622cbf548157abeaa4b68d86201c892bdb8a7845bbd89333fb4fe4532bdd162cc9d0f4d56da414e1f87c8dccb6356782a222412d25f4497e4fe6a757c790              151 Release
- 0207ac2f3b9e543721367a1257dd726d65f788e323bc137c6b87575672f9bb2f73f6f2acc37f081728fbf83bbe55c6493c651377d94a364a552d9e06019838a3             2944 main/binary-amd64/Packages
- 611eaff349081df39f1d713f3a4eaeffe2d6b28f693bf58e6f39ada4a6ed1ba56bb80dce444cf1d01459fa5362eafa94358852d0d4bc5199dde64ac446dfd697             1486 main/binary-amd64/Packages.gz
+ 80f8d19b5761ccac35366314d53ee9f01d4722cd1de26f54e0de072e61dd51f4e93db1bda9010e95d89789bfb986d6faac0fdc7597de3c39311c48b5aceaa34e              151 Release
+ 3a2825fee44fead3944d1e538cc287f1cb479221e421939ce975352f7f9fd5c64be89dd831ba6332058ead525781404f6ec3e946867b634004abbe0d5ad174c7             2944 main/binary-amd64/Packages
+ a357566f2acaf718daa3d4ddc1e6fd60cb4cfca3a6899e3abfd025ac9ed4160d903795c91717c911771e6aeae74c0d470184d77ca0e4a5febd55c502fe54c875             1483 main/binary-amd64/Packages.gz
 -----BEGIN PGP SIGNATURE-----
 
-iHUEARYKAB0WIQTYZBTToP9xIt5VJTQCu48YiRcATgUCapI18AAKCRACu48YiRcA
-TiqpAQCWH7adTvEYmyff4aIqCgYI2X3TLQ+vat6c4nb7sZz4jgD+LHPpleK6FN3W
-ueCDpeWZHVWLSphYhkZkzNwmXfTUSgs=
-=DDXW
+iHUEARYKAB0WIQTYZBTToP9xIt5VJTQCu48YiRcATgUCapI5KQAKCRACu48YiRcA
+TqYMAQC04a93tMnySWJl80lx3avZm3aeSlYv0cLJCwJfbQWp6QD/UuHE8nAtJWFv
+M2ssIKepKYcvilNtUdQDxofnXwW2lwE=
+=5OIC
 -----END PGP SIGNATURE-----
