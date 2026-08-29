@@ -13,6 +13,8 @@ done < <(awk '/^Package: /{p=$2} /^Version: /{print p, $2}' \
 
 cat > "$SITE/index.html" <<EOF
 <!doctype html>
+<html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>$LABEL</title>
@@ -28,6 +30,8 @@ cat > "$SITE/index.html" <<EOF
   th { border-bottom: 1px solid rgba(127,127,127,.4); }
   footer { margin-top: 2.5rem; font-size: .9em; opacity: .75; }
 </style>
+</head>
+<body>
 <h1>$LABEL</h1>
 <p>Unofficial Debian packages, rebuilt automatically on each upstream release.
 Suite <code>$DISTRIBUTION</code>, component <code>$COMPONENT</code>,
@@ -46,5 +50,7 @@ sudo apt update</code></pre>
 
 <footer>Built and published by
 <a href="https://github.com/laplaces-agent/apt">laplaces-agent/apt</a>.</footer>
+</body>
+</html>
 EOF
 echo "wrote index.html"
