@@ -1,23 +1,23 @@
 Architectures: amd64
 Codename: sid
 Components: main
-Date: Sat, 29 Aug 2026 01:21:15 +0000
+Date: Sat, 29 Aug 2026 01:29:20 +0000
 Label: xeyes.org apt repository
 Origin: xeyes.org
 Suite: sid
 MD5Sum:
- 231f6a395cf009320287241563c54b7b              151 Release
- b37482a26a65abc0275ad5dc6273d3cd              976 main/binary-amd64/Packages
- 076b51ebfad15e6b9ca180f7527b31db              627 main/binary-amd64/Packages.gz
+ 82194d28e31a0c11fd64e3ca130613a2              151 Release
+ 0834de902d4495eaa73d97b89a4d1f6f             2944 main/binary-amd64/Packages
+ 273d3b30512c122f4178e0f0e4d81535             1486 main/binary-amd64/Packages.gz
 SHA1:
- ef28d983febdeb402ec9743360a1fd83ca3fdf7f              151 Release
- 724bfce878f2bbb6d045c4528fa878a565e7d1c3              976 main/binary-amd64/Packages
- ccc85967c6c070cd4ccb1ec2a7de543b2608800a              627 main/binary-amd64/Packages.gz
+ 3523232cea1cf7f77f167116f0b02ca99b1528c8              151 Release
+ e99a5fc17e79128393571450a8a9596c1c93c73f             2944 main/binary-amd64/Packages
+ 158d965e1a1b36c59d46e5070fc339dabfc1df99             1486 main/binary-amd64/Packages.gz
 SHA256:
- 269184b7d20ba69fefb9f6379b8c8d15d8a148b20e2e4934a3b970469feea6db              151 Release
- 51af4392c49e619b577edca1e6211667d7f0ccc0871c36c72d680f82c577a83e              976 main/binary-amd64/Packages
- 1d0b24439665c6fad9f2fa902e7aa660ae2193ae63d7e8a74944d1b51a83e53f              627 main/binary-amd64/Packages.gz
+ c0924f64115b1fd161b863e47779f45e7776c83cb8373672f0908176f0177ae0              151 Release
+ defe0366af94aede6fcb7406c499148bf55721d7eb605b8dedb0f8075e928831             2944 main/binary-amd64/Packages
+ d1362a7b5d883885e99476d382bdbe73223a18f044534423af1b354d6283f37c             1486 main/binary-amd64/Packages.gz
 SHA512:
- a71c1e4d37aa0c5abed843373b628702766c289e649ed6bae9b065bd27bf00f0d500e4e4d98a8e43ab8b5ee4345f7a1f408569f134da0107784281ad343d471a              151 Release
- 4fd621876d3b4fa6f28831b684c7bc85ed1be3a4333465314a7de5a32f0db634dad332131f8f2417542365b5eb22fd3ef078aa8941e34fc57239e22510cd4568              976 main/binary-amd64/Packages
- eaad9528d3b7fcfda60c37e9640c31cc1d7ac21afa900ad41b555113060343fa2365cf56779c774fc7e4120d3cf12fba6908b662005f76053d0d79e152e43599              627 main/binary-amd64/Packages.gz
+ 02ee622cbf548157abeaa4b68d86201c892bdb8a7845bbd89333fb4fe4532bdd162cc9d0f4d56da414e1f87c8dccb6356782a222412d25f4497e4fe6a757c790              151 Release
+ 0207ac2f3b9e543721367a1257dd726d65f788e323bc137c6b87575672f9bb2f73f6f2acc37f081728fbf83bbe55c6493c651377d94a364a552d9e06019838a3             2944 main/binary-amd64/Packages
+ 611eaff349081df39f1d713f3a4eaeffe2d6b28f693bf58e6f39ada4a6ed1ba56bb80dce444cf1d01459fa5362eafa94358852d0d4bc5199dde64ac446dfd697             1486 main/binary-amd64/Packages.gz
