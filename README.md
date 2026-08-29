@@ -22,7 +22,7 @@ gh-pages branch
 sudo install -d -m 0755 /etc/apt/keyrings
 curl -fsSL https://apt.xeyes.org/key.gpg \
   | sudo tee /etc/apt/keyrings/apt.xeyes.org.gpg > /dev/null
-echo "deb [signed-by=/etc/apt/keyrings/apt.xeyes.org.gpg] https://apt.xeyes.org sid main" \
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/apt.xeyes.org.gpg] https://apt.xeyes.org sid main" \
   | sudo tee /etc/apt/sources.list.d/apt.xeyes.org.list
 sudo apt update
 ```
@@ -103,3 +103,18 @@ directory, and needs `GPG_KEY_ID` set to an imported secret key.
   domain survives the branch being recreated.
 - **The pool keeps one version per package.** A new build deletes the old
   `.deb`; there is no rollback target in the repository.
+- **The repository is `amd64` only, so the sources line carries `arch=amd64`.**
+  Without it a client that has enabled a foreign architecture
+  (`dpkg --add-architecture i386`) asks for an i386 index on every `apt update`
+  and gets `Skipping acquire of configured file 'main/binary-i386/Packages'`.
+  Harmless, but the restriction is what every other single-architecture
+  repository ships and it keeps the notice off.
+- **Never republish a version string that has already shipped.** apt dispatches
+  on the version alone, so a rebuilt `.deb` carrying the same
+  `<upstream>-<revision>~<suite>` reaches no machine that already installed the
+  old one: `apt upgrade` compares equal and does nothing, and only
+  `apt install --reinstall` crosses the gap. `zig 0.16.0-2~sid` went out twice
+  and the two builds disagree on `Installed-Size` (405332 against 405336, one
+  `du` block from a different builder filesystem), which shows up client-side as
+  two records in `apt show -a zig`. Bump `DEBIAN_REVISION` for any rebuild that
+  leaves the pool.

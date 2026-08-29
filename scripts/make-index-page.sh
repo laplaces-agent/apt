@@ -41,7 +41,7 @@ architecture <code>$ARCHITECTURE</code>.</p>
 <pre><code>sudo install -d -m 0755 /etc/apt/keyrings
 curl -fsSL $PAGES_URL/key.gpg \\
   | sudo tee /etc/apt/keyrings/$KEYRING_NAME.gpg &gt; /dev/null
-echo "deb [signed-by=/etc/apt/keyrings/$KEYRING_NAME.gpg] $PAGES_URL $DISTRIBUTION $COMPONENT" \\
+echo "deb [arch=$ARCHITECTURE signed-by=/etc/apt/keyrings/$KEYRING_NAME.gpg] $PAGES_URL $DISTRIBUTION $COMPONENT" \\
   | sudo tee /etc/apt/sources.list.d/$KEYRING_NAME.list
 sudo apt update</code></pre>
 
