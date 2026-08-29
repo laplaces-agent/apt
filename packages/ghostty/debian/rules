@@ -1,0 +1,72 @@
+#!/usr/bin/make -f
+
+export GHOSTTY_VERSION ?= $(shell dpkg-parsechangelog -S Version | sed 's/-.*//')
+
+ZIG ?= zig
+
+# Where the system gtk4-layer-shell is missing, zig builds and ships its own copy.
+LAYER_SHELL_FLAG := $(if $(shell pkg-config --exists gtk4-layer-shell-0 && echo y),,-fno-sys=gtk4-layer-shell)
+
+# debugedit before 5.1 cannot read the DWARF 5 that zig emits, which makes
+# dh_strip fail. Set true to have zig strip instead and ship no -dbgsym package.
+ZIG_STRIP ?= false
+
+# ncurses-term ships the terminfo entry "ghostty" from 6.5 onwards, so ours is
+# dropped to avoid a file conflict. Set "no" where ncurses-term is older,
+# otherwise nothing would provide the entry.
+NCURSES_HAS_GHOSTTY ?= yes
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	# zig has no configure step
+
+override_dh_auto_build:
+	# zig build does both; the work happens in the install step
+
+override_dh_auto_install:
+	# Debian names it libbz2, not libbzip2
+	sed -i 's/linkSystemLibrary2("bzip2", dynamic_link_opts)/linkSystemLibrary2("bz2", dynamic_link_opts)/' src/build/SharedDeps.zig
+	DESTDIR=$(CURDIR)/debian/ghostty $(ZIG) build \
+		--summary all \
+		--prefix /usr \
+		--build-id \
+		-Doptimize=ReleaseFast \
+		-Dcpu=baseline \
+		-Dpie=true \
+		-Demit-docs \
+		-Dstrip=$(ZIG_STRIP) \
+		-fsys=fontconfig \
+		$(LAYER_SHELL_FLAG) \
+		-Dversion-string=$(GHOSTTY_VERSION)
+	find $(CURDIR)/debian/ghostty -name '*.a' -delete
+ifneq ($(LAYER_SHELL_FLAG),)
+	# The bundled gtk4-layer-shell exists only for ghostty to link against,
+	# so its development headers are not ours to ship
+	rm -f $(CURDIR)/debian/ghostty/usr/include/gtk4-layer-shell.h \
+		$(CURDIR)/debian/ghostty/usr/include/gtk4-session-lock.h
+endif
+ifeq ($(ZIG_STRIP),true)
+	# -Dstrip does not cover the shared libraries, so strip them here too and
+	# leave dh_strip nothing to run the too-old debugedit over
+	find $(CURDIR)/debian/ghostty -name '*.so*' -type f -exec strip --strip-unneeded {} +
+endif
+	# The build produces x/xterm-ghostty (not in ncurses-term, so ship it) and
+	# g/ghostty (already in ncurses-term, so drop it)
+ifeq ($(NCURSES_HAS_GHOSTTY),yes)
+	rm $(CURDIR)/debian/ghostty/usr/share/terminfo/g/ghostty
+	rmdir $(CURDIR)/debian/ghostty/usr/share/terminfo/g
+endif
+	# These files reference the build-time zig-out prefix
+	sed -i 's|\./zig-out||g' $(CURDIR)/debian/ghostty/usr/share/systemd/user/app-com.mitchellh.ghostty.service
+	sed -i 's|\./zig-out||g' $(CURDIR)/debian/ghostty/usr/share/applications/com.mitchellh.ghostty.desktop
+	sed -i 's|\./zig-out||g' $(CURDIR)/debian/ghostty/usr/share/dbus-1/services/com.mitchellh.ghostty.service
+	# Debian puts zsh completions in vendor-completions
+	mv $(CURDIR)/debian/ghostty/usr/share/zsh/site-functions $(CURDIR)/debian/ghostty/usr/share/zsh/vendor-completions
+
+override_dh_auto_test:
+	# Skip tests
+
+override_dh_auto_clean:
+	# Do not run ghostty's Makefile clean — it deletes .zig-cache

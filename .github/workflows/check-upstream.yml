@@ -1,0 +1,48 @@
+name: check-upstream
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# Actions falls back to sh inside this container, so the shell is pinned
+# rather than left to detection: the steps below rely on bash behaviour.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - id: check
+        run: ./scripts/check-upstream.sh
+
+      # A fixed branch, force-pushed: a bump that lands before the previous one
+      # is merged should supersede it rather than open a second pull request.
+      - name: Open or update the pull request
+        if: steps.check.outputs.changed != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch=automated/version-bump
+          . ./config.env
+          name=${MAINTAINER%% <*}
+          email=${MAINTAINER##*<}; email=${email%>}
+          git config user.name "$name"
+          git config user.email "$email"
+          git checkout -B "$branch"
+          git add packages
+          git commit -m "${{ steps.check.outputs.title }}"
+          git push -f origin "$branch"
+          if ! gh pr view "$branch" --json state --jq .state 2>/dev/null | grep -qx OPEN; then
+            gh pr create --base main --head "$branch" \
+              --title "${{ steps.check.outputs.title }}" \
+              --body-file bump-body.md
+          fi

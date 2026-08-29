@@ -1,0 +1,84 @@
+name: publish
+
+on:
+  workflow_call:
+
+# Two package workflows can finish at once, and both rewrite the same gh-pages
+# branch. Serialising them is what keeps the second from pushing a stale index.
+concurrency:
+  group: apt-publish
+  cancel-in-progress: false
+
+# Actions falls back to sh inside this container, so the shell is pinned
+# rather than left to detection: the steps below rely on bash behaviour.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:sid
+    permissions:
+      contents: write
+    steps:
+      - name: Install tooling
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            git ca-certificates gnupg apt-utils dpkg-dev curl
+          git config --global --add safe.directory '*'
+
+      - uses: actions/checkout@v7
+
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: deb-*
+          merge-multiple: true
+          path: incoming
+
+      - name: Import signing key
+        env:
+          APT_GPG_PRIVATE_KEY: ${{ secrets.APT_GPG_PRIVATE_KEY }}
+        run: |
+          if [ -z "$APT_GPG_PRIVATE_KEY" ]; then
+            echo "secret APT_GPG_PRIVATE_KEY is unset; see README" >&2
+            exit 1
+          fi
+          printf '%s\n' "$APT_GPG_PRIVATE_KEY" | gpg --batch --import
+          key=$(gpg --list-secret-keys --with-colons | awk -F: '/^fpr:/{print $10; exit}')
+          echo "GPG_KEY_ID=$key" >> "$GITHUB_ENV"
+
+      - name: Check out the published site
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          url="https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if ! git clone --depth 1 --branch gh-pages "$url" site 2>/dev/null; then
+            echo "gh-pages does not exist yet, starting it empty"
+            git clone --depth 1 "$url" site
+            git -C site checkout --orphan gh-pages
+            git -C site rm -rf . >/dev/null 2>&1 || true
+          fi
+
+      - name: Rebuild the index
+        run: ./scripts/publish.sh incoming site
+
+      - name: Push
+        run: |
+          # Identity comes from config.env so the packages and the commits that
+          # publish them never drift apart.
+          . ./config.env
+          name=${MAINTAINER%% <*}
+          email=${MAINTAINER##*<}; email=${email%>}
+          cd site
+          git config user.name "$name"
+          git config user.email "$email"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "index unchanged, nothing to push"
+            exit 0
+          fi
+          git commit -m "publish from $(printf '%.7s' "$GITHUB_SHA")"
+          git push origin gh-pages

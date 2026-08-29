@@ -1,0 +1,5 @@
+build/
+site/
+*.deb
+*.tar.gz
+*.tar.xz

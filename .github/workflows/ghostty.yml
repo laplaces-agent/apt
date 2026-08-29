@@ -1,0 +1,50 @@
+name: ghostty
+
+# Deliberately does not trigger on changes to this file: the trigger covers the
+# inputs that change the package, so editing how the job runs does not rebuild
+# it. Use workflow_dispatch after editing this workflow.
+on:
+  push:
+    branches: [main]
+    paths:
+      - packages/ghostty/**
+      - scripts/build-ghostty.sh
+      - scripts/common.sh
+      - config.env
+  workflow_dispatch:
+
+# Actions falls back to sh inside this container, so the shell is pinned
+# rather than left to detection: the steps below rely on bash behaviour.
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:sid
+    steps:
+      - name: Install checkout prerequisites
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends git ca-certificates
+          git config --global --add safe.directory '*'
+
+      - uses: actions/checkout@v7
+
+      - name: Build
+        run: ./scripts/build-ghostty.sh
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: deb-ghostty
+          path: build/*.deb
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    permissions:
+      contents: write
+    uses: ./.github/workflows/publish.yml
+    secrets: inherit
