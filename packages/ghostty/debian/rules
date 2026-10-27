@@ -52,11 +52,12 @@ ifeq ($(ZIG_STRIP),true)
 	# leave dh_strip nothing to run the too-old debugedit over
 	find $(CURDIR)/debian/ghostty -name '*.so*' -type f -exec strip --strip-unneeded {} +
 endif
-	# The build produces x/xterm-ghostty (not in ncurses-term, so ship it) and
-	# g/ghostty (already in ncurses-term, so drop it)
+	# tic writes x/xterm-ghostty (not in ncurses-term, so ship it) and
+	# g/ghostty as a symlink to it (already in ncurses-term, so drop it).
+	# zig's directory install skips symlinks, so g/ is usually left empty
+	# rather than holding the link.
 ifeq ($(NCURSES_HAS_GHOSTTY),yes)
-	rm $(CURDIR)/debian/ghostty/usr/share/terminfo/g/ghostty
-	rmdir $(CURDIR)/debian/ghostty/usr/share/terminfo/g
+	rm -rf $(CURDIR)/debian/ghostty/usr/share/terminfo/g
 endif
 	# These files reference the build-time zig-out prefix
 	sed -i 's|\./zig-out||g' $(CURDIR)/debian/ghostty/usr/share/systemd/user/app-com.mitchellh.ghostty.service
