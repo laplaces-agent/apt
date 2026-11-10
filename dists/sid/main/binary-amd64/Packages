@@ -44,20 +44,20 @@ Description: Fast, feature-rich, and cross-platform terminal emulator
 
 Package: zig
 Architecture: amd64
-Version: 0.17.0-1~sid
+Version: 0.17.1-1~sid
 Priority: optional
 Section: devel
 Maintainer: laplaces-agent <claude@xeyes.org>
-Installed-Size: 420816
+Installed-Size: 421100
 Provides: zig-stable
 Conflicts: zig-stable, zig-0
 Replaces: zig-stable, zig-0
-Filename: pool/main/zig_0.17.0-1~sid_amd64.deb
-Size: 60160220
-MD5sum: 563110f3e3892f1f78c7e33bcd752c7f
-SHA1: 8f41ce382930b2f6b26b15e44f50b973a592d514
-SHA256: 51c79580261bd21cc410f95199a49ce6efe9a00e4ae04279bd704754b5240312
-SHA512: 4fb01eb3d2434c13c9f214857970d53e51eef013d60edebdc9b851b7e9fcb96ea8db3381f36ac6d60801639413f18b26ddfedcf587dec682ab6c723a0d1d5b88
+Filename: pool/main/zig_0.17.1-1~sid_amd64.deb
+Size: 60223776
+MD5sum: 7e83dcd3663ba96a52930ea5813353e6
+SHA1: fb8c2b811164357bc8fecbaa0ee758e59289f042
+SHA256: 43545a158afc3db6a5f6063cc1a2626d79e8fcf35b9ca0079256caf4b0bbd1f9
+SHA512: 9f5f1d48a1b3898da160231480ab14fc8473c58e79dbf5520a78cd409f4b9f3b5d62350b3f12f2be8e9cace4cff4cff0e32d8d1d013de43ccbbb3709f06e0c7e
 Homepage: https://ziglang.org/
 Description: General-purpose programming language and toolchain
  Zig is a general-purpose programming language and toolchain for maintaining
