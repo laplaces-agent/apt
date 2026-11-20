@@ -1,0 +1,43 @@
+name: validate-bump
+run-name: validate-bump ${{ inputs.sha }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: Exact automated version-bump commit to build
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    container:
+      image: debian:sid
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [ghostty, zig]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Validate commit identifier
+        env:
+          BUMP_SHA: ${{ inputs.sha }}
+        run: '[[ "$BUMP_SHA" =~ ^[0-9a-f]{40}$ ]]'
+      - name: Install checkout prerequisites
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends git ca-certificates
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.sha }}
+          persist-credentials: false
+      - name: Build without publishing
+        run: bash ./scripts/build-${{ matrix.package }}.sh
